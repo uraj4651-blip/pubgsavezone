@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUBG SafeZone VIP - Cloud Portal</title>
+    <style>
+        :root {
+            --bg-color: #060709;
+            --neon-gold: #ffaa00;
+            --neon-green: #00ff66;
+            --panel-bg: rgba(22, 27, 38, 0.6);
+            --white: #ffffff;
+            --neon-red: #ff3333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 10% 20%, rgba(255, 170, 0, 0.1) 0px, transparent 50%),
+                radial-gradient(at 90% 80%, rgba(0, 255, 102, 0.08) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: var(--white);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* PAGE 1: PUBLIC VIEW */
+        .safezone-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .announcement-bar {
+            width: 100%;
+            background: linear-gradient(90deg, #b37700, #ffaa00, #b37700);
+            color: #000000;
+            font-weight: bold;
+            font-size: 14px;
+            padding: 10px 0;
+            text-align: center;
+            box-shadow: 0 2px 15px rgba(255, 170, 0, 0.3);
+            text-transform: uppercase;
+        }
+
+        .vip-card {
+            max-width: 480px;
+            width: 90%;
+            padding: 40px 25px;
+            background: var(--panel-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 24px;
+            text-align: center;
+            border: 2px solid rgba(255, 170, 0, 0.2);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+            margin: 40px 0 20px 0;
+        }
+
+        .badge-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0, 255, 102, 0.1);
+            border: 1px solid var(--neon-green);
+            color: var(--neon-green);
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .deal-counter-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 170, 0, 0.1);
+            border: 1px solid var(--neon-gold);
+            color: var(--neon-gold);
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .blink-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--neon-green);
+            border-radius: 50%;
+            animation: network-pulse 1.5s infinite;
+        }
+
+        .trust-banner {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px dashed rgba(255, 170, 0, 0.3);
+            padding: 10px;
+            border-radius: 12px;
+            font-size: 13px;
+            color: #25d366;
+            font-weight: 600;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .vip-card h1 {
+            font-size: 38px;
+            font-weight: 900;
+            margin: 0 0 10px 0;
+            background: linear-gradient(135deg, #ffffff 30%, #ffcc00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .vip-card h1 span {
+            color: var(--neon-gold);
+            -webkit-text-fill-color: initial;
+        }
+
+        .tagline {
+            color: #94a3b8;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .btn-neon-wa {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            background: linear-gradient(135deg, #25d366 0%, #14a847 100%);
+            color: white;
+            text-decoration: none;
+            font-size: 22px;
+            font-weight: 800;
+            padding: 20px 35px;
+            border-radius: 50px;
+            box-shadow: 0 0 30px rgba(37, 211, 102, 0.5);
+            transition: 0.3s;
+            margin-bottom: 35px;
+            width: 100%;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-neon-wa:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 45px rgba(37, 211, 102, 0.8);
+        }
+
+        .btn-neon-wa svg {
+            width: 32px;
+            height: 32px;
+            fill: white;
+        }
+
+        .features-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            text-align: left;
+        }
+
+        .feature-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 15px 20px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icon-wrap {
+            font-size: 22px;
+            background: rgba(255, 170, 0, 0.1);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            color: var(--neon-gold);
+        }
+
+        .feature-text b {
+            display: block;
+            color: var(--white);
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .feature-text span {
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .admin-link-btn {
+            background: none;
+            border: none;
+            color: #475569;
+            font-size: 12px;
+            cursor: pointer;
+            margin-bottom: 30px;
+            text-decoration: underline;
+        }
+
+        /* DYNAMIC POPUP MODAL STYLES */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-box {
+            background: #111622;
+            border: 2px solid var(--neon-gold);
+            padding: 30px 20px;
+            border-radius: 24px;
+            width: 85%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(255, 170, 0, 0.3);
+            position: relative;
+        }
+
+        .modal-box h3 {
+            margin: 0 0 20px 0;
+            color: white;
+            font-size: 19px;
+            font-weight: 700;
+        }
+
+        .deal-option-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            padding: 14px 18px;
+            margin-bottom: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 170, 0, 0.2);
+            color: white;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            text-align: left;
+            box-sizing: border-box;
+        }
+
+        .deal-option-btn:hover {
+            background: linear-gradient(135deg, #ffaa00 0%, #b37700 100%);
+            color: black;
+            border-color: var(--neon-gold);
+            transform: translateY(-2px);
+        }
+
+        .close-modal-btn {
+            background: none;
+            border: none;
+            color: #64748b;
+            font-size: 26px;
+            position: absolute;
+            top: 10px;
+            right: 18px;
+            cursor: pointer;
+        }
+
+        .close-modal-btn:hover {
+            color: var(--neon-red);
+        }
+
+        /* PAGE 2: ADMIN / LOGIN */
+        .admin-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .admin-box {
+            max-width: 400px;
+            width: 85%;
+            background: #111622;
+            border: 2px solid var(--neon-gold);
+            padding: 35px 25px;
+            border-radius: 20px;
+            box-shadow: 0 0 35px rgba(255, 170, 0, 0.2);
+            text-align: center;
+        }
+
+        .admin-box h2 {
+            margin-top: 0;
+            color: var(--neon-gold);
+            text-transform: uppercase;
+            font-size: 24px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            color: #94a3b8;
+            margin-bottom: 6px;
+        }
+
+        .input-group input, .input-group textarea {
+            width: 100%;
+            padding: 12px;
+            background: #060709;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .admin-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #ffaa00 0%, #b37700 100%);
+            border: none;
+            color: black;
+            font-weight: bold;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .back-btn {
+            background: none;
+            border: 1px solid #334155;
+            color: #94a3b8;
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .error-msg {
+            color: var(--neon-red);
+            font-size: 13px;
+            margin-bottom: 15px;
+            display: none;
+            font-weight: 600;
+        }
+
+        footer {
+            margin-top: 35px;
+            font-size: 11px;
+            color: #475569;
+            text-transform: uppercase;
+        }
+
+        @keyframes network-pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 255, 102, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 255, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 255, 102, 0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PAGE 1: PUBLIC INTERFACE -->
+    <div id="page-public" class="safezone-wrapper">
+        <div class="announcement-bar" id="live-announcement-text">🔄 Loading Cloud Data...</div>
+
+        <div class="vip-card">
+            <div class="badge-row">
+                <div class="live-badge">
+                    <span class="blink-dot"></span> Admin Online
+                </div>
+                <div class="deal-counter-badge" id="live-counter-text">🏆 Loading...</div>
+            </div>
+
+            <div class="trust-banner">
+                🛡️ 100% Guaranteed Safe &amp; 5-Star Rated Trader
+            </div>
+
+            <h1>PUBG <span>SAFEZONE</span></h1>
+            <div class="tagline">Pakistan ka sab se secure gaming escrow system. PUBG Accounts, Cheap UC Packages, aur Popularity ki deals 100% safe tareeqe se direct WhatsApp par mukammal karein.</div>
+
+            <!-- Modified Button to Trigger Popup -->
+            <button class="btn-neon-wa" onclick="openDealModal()">
+                <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.003 5.424 5.429 0 12.022 0c3.196.002 6.199 1.242 8.458 3.498A11.89 11.89 0 0 1 24 11.891c-.002 6.601-5.429 12.023-12.022 12.023-1.997-.001-3.955-.5-5.69-1.448L0 24zm6.59-4.017c1.615.96 3.2 1.464 4.842 1.465 5.405 0 9.802-4.372 9.804-9.752a9.718 9.718 0 0 0-2.853-6.904A9.713 9.713 0 0 0 12.02 2.138c-5.41 0-9.802 4.374-9.806 9.754 0 1.74.475 3.442 1.373 4.943l-.99 3.61 3.704-.972zm12.353-5.32c-.3-.15-1.771-.875-2.046-.975-.275-.1-.475-.15-.675.15-.2.3-.775.975-.95 1.175-.175.2-.35.225-.65.075-1.208-.531-2.174-1.026-3.016-2.471-.22-.38.22-.35.63-1.162.075-.15.038-.285-.019-.4-.056-.115-.475-1.145-.652-1.571-.173-.417-.347-.36-.476-.366-.123-.006-.266-.007-.409-.007a.788.788 0 0 0-.57.265c-.198.222-.754.737-.754 1.798s.772 2.088.88 2.234c.108.147 1.517 2.316 3.675 3.248 1.488.644 2.13.743 2.887.632.46-.067 1.771-.724 2.021-1.425.25-.7.25-1.3.175-1.425-.075-.125-.275-.2-.575-.35z"/></svg>
+                START DEAL NOW
+            </button>
+
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="icon-wrap">🎮</div>
+                    <div class="feature-text"><b>PUBG Accounts Trading</b><span>Glacier, Mythic Fashion, aur High-Level accounts ki safe deal.</span></div>
+                </div>
+                <div class="feature-item">
+                    <div class="icon-wrap">💰</div>
+                    <div class="feature-text"><b>PUBG UC Escrow</b><span>UC ki sasti aur 100% fraud-proof transfer bina kisi risk ke.</span></div>
+                </div>
+                <div class="feature-item">
+                    <div class="icon-wrap">🔥</div>
+                    <div class="feature-text"><b>Popularity Orders Verification</b><span>Popularity ki khareed-o-faroopt par mukammal safe escrow service.</span></div>
+                </div>
+            </div>
+
+            <footer>SECURED BY PUBG SAFEZONE &copy; 2026</footer>
+        </div>
+
+        <button class="admin-link-btn" onclick="switchPage('page-login')">🔧 Admin Portal</button>
+    </div>
+
+    <!-- NEW INTERACTIVE POPUP MODAL -->
+    <div id="deal-modal" class="modal-overlay">
+        <div class="modal-box">
+            <button class="close-modal-btn" onclick="closeDealModal()">&times;</button>
+            <h3>Aap Kis Cheez Ki Deal Karna Chahte Hain?</h3>
+            
+            <button class="deal-option-btn" onclick="redirectToWhatsApp('account')">
+                <span>🎮</span> PUBG Account Deal
+            </button>
+            <button class="deal-option-btn" onclick="redirectToWhatsApp('uc')">
+                <span>💰</span> PUBG UC Deal
+            </button>
+            <button class="deal-option-btn" onclick="redirectToWhatsApp('popularity')">
+                <span>🔥</span> PUBG Popularity Deal
+            </button>
+            <button class="deal-option-btn" onclick="redirectToWhatsApp('gift')">
+                <span>🎁</span> Gift / Royal Pass Deal
+            </button>
+        </div>
+    </div>
+
+    <!-- PAGE 2: LOGIN PROMPT -->
+    <div id="page-login" class="admin-wrapper" style="display: none;">
+        <div class="admin-box">
+            <h2>Admin Security Check</h2>
+            <div id="login-error" class="error-msg">Ghalt Username ya Password!</div>
+            
+            <div class="input-group">
+                <label>Username</label>
+                <input type="text" id="admin-user" placeholder="Enter username...">
+            </div>
+            
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="admin-pass" placeholder="Enter password...">
+            </div>
+            
+            <button class="admin-btn" onclick="handleLogin()">Login</button>
+            <button class="back-btn" onclick="switchPage('page-public')">Back To Site</button>
+        </div>
+    </div>
+
+    <!-- PAGE 3: CLOUD CONTROL PANEL -->
+    <div id="page-admin-panel" class="admin-wrapper" style="display: none;">
+        <div class="admin-box">
+            <h2>SafeZone Dashboard</h2>
+            <p style="color: #64748b; font-size: 13px; margin-bottom: 20px;">Live Data Server par save karein:</p>
+            
+            <div class="input-group">
+                <label>Announcement Text</label>
+                <textarea id="input-announcement" rows="3"></textarea>
+            </div>
+            
+            <div class="input-group">
+                <label>Total Deals Counter Text</label>
+                <input type="text" id="input-counter">
+            </div>
+            
+            <button class="admin-btn" id="btn-save" onclick="handleSave()">Save Changes</button>
+            <button class="back-btn" onclick="switchPage('page-public')">Cancel</button>
+        </div>
+    </div>
+
+    <!-- CLOUD CORE SCRIPT -->
+    <script>
+        var dbUrl = "https://api.jsonbin.io/v3/b/66104e76e41b4d34e4de5567"; 
+        var masterKey = "$2b$10$7RmsIeCgC5qKz8pYV00WreOm2D5G327b7bN12uDHz2C8h.2mFpTeq"; 
+
+        var currentData = {
+            announcement: "📢 ALERT: Fake admin se bachein, hamesha deal se pehle number (03162868764) lazmi verify karein!",
+            counter: "🏆 1,450+ Deals Done"
+        };
+
+        function loadCloudData() {
+            fetch(dbUrl + "/latest", {
+                method: "GET",
+                headers: { "X-Master-Key": masterKey }
+            })
+            .then(res => res.json())
+            .then(resData => {
+                if(resData.record) {
+                    currentData = resData.record;
+                }
+                updateUI();
+            })
+            .catch(err => {
+                console.log("Cloud server slow, loading local defaults.");
+                updateUI();
+            });
+        }
+
+        function updateUI() {
+            document.getElementById("live-announcement-text").innerText = currentData.announcement;
+            document.getElementById("live-counter-text").innerText = currentData.counter;
+            document.getElementById("input-announcement").value = currentData.announcement;
+            document.getElementById("input-counter").value = currentData.counter;
+        }
+
+        function switchPage(pageId) {
+            document.getElementById("page-public").style.display = 'none';
+            document.getElementById("page-login").style.display = 'none';
+            document.getElementById("page-admin-panel").style.display = 'none';
+            document.getElementById(pageId).style.display = 'flex';
+        }
+
+        /* MODAL POPUP LOGIC */
+        function openDealModal() {
+            document.getElementById("deal-modal").style.display = "flex";
+        }
+
+        function closeDealModal() {
+            document.getElementById("deal-modal").style.display = "none";
+        }
+
+        function redirectToWhatsApp(optionType) {
+            var baseNum = "923162868764";
+            var msg = "";
+            
+            if(optionType === 'account') {
+                msg = "Assalam-o-Alaikum Umar Bhai, mujhe PUBG Account ki deal karwani hai.";
+            } else if(optionType === 'uc') {
+                msg = "Assalam-o-Alaikum Umar Bhai, mujhe PUBG UC ki deal karwani hai.";
+            } else if(optionType === 'popularity') {
+                msg = "Assalam-o-Alaikum Umar Bhai, mujhe PUBG Popularity ki deal karwani hai.";
+            } else if(optionType === 'gift') {
+                msg = "Assalam-o-Alaikum Umar Bhai, mujhe Gift / Royal Pass ki deal karwani hai.";
+            }
+            
+            var wpUrl = "https://wa.me/" + baseNum + "?text=" + encodeURIComponent(msg);
+            window.open(wpUrl, '_blank');
+            closeDealModal();
+        }
+
+        function handleLogin() {
+            var u = document.getElementById("admin-user").value;
+            var p = document.getElementById("admin-pass").value;
+
+            if (u === "umarmeo" && p === "umar2580") {
+                switchPage('page-admin-panel');
+                document.getElementById("admin-user").value = "";
+                document.getElementById("admin-pass").value = "";
+                document.getElementById("login-error").style.display = 'none';
+            } else {
+                document.getElementById("login-error").style.display = 'block';
+            }
+        }
+
+        function handleSave() {
+            var saveBtn = document.getElementById("btn-save");
+            saveBtn.innerText = "SAVING TO CLOUD...";
+            saveBtn.disabled = true;
+
+            var updatedRecord = {
+                announcement: document.getElementById("input-announcement").value,
+                counter: document.getElementById("input-counter").value
+            };
+
+            fetch(dbUrl, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Master-Key": masterKey
+                },
+                body: JSON.stringify(updatedRecord)
+            })
+            .then(res => res.json())
+            .then(data => {
+                currentData = updatedRecord;
+                updateUI();
+                saveBtn.innerText = "SAVE CHANGES";
+                saveBtn.disabled = false;
+                switchPage('page-public');
+            })
+            .catch(err => {
+                alert("Cloud sync failed! Internet check karein.");
+                saveBtn.innerText = "SAVE CHANGES";
+                saveBtn.disabled = false;
+            });
+        }
+
+        loadCloudData();
+    </script>
+</body>
+</html>
