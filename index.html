@@ -624,8 +624,8 @@
             </div>
 
             <div class='input-group'>
-                <label>Active WhatsApp Number (Country Code Ke Sath, e.g., 923162868764)</label>
-                <input id='input-whatsapp' type='text' placeholder='e.g., 923162868764'/>
+                <label>Active WhatsApp Number (Country Code Ke Sath, e.g., 923264725314)</label>
+                <input id='input-whatsapp' type='text' placeholder='e.g., 923264725314'/>
             </div>
             
             <button class='admin-btn' id='btn-save' onclick='handleSave()'>Save Changes</button>
@@ -645,7 +645,7 @@
         var currentData = {
             announcement: "📢 ALERT: Fake admin se bachein, hamesha deal se pehle number (03162868764) lazmi verify karein!",
             counter: "🏆 1,450+ Deals Done",
-            whatsapp: "923162868764"
+            whatsapp: "923264725314"
         };
 
         function loadCloudData() {
@@ -674,7 +674,7 @@
             
             var currentNum = currentData.whatsapp;
             if(!currentNum) {
-                currentNum = "923162868764";
+                currentNum = "923264725314";
             }
             document.getElementById("input-whatsapp").value = currentNum;
         }
@@ -732,7 +732,7 @@
         function redirectToWhatsApp(optionType) {
             var baseNum = currentData.whatsapp;
             if(!baseNum) {
-                baseNum = "923162868764";
+                baseNum = "923264725314";
             }
             
             baseNum = baseNum.replace(/[^0-9]/g, '');
